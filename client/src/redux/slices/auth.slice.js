@@ -17,21 +17,6 @@ const authSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(registerAction.pending, (state) => {
-			state.error = ''
-			state.loading = true
-		})
-		builder.addCase(registerAction.fulfilled, (state, action) => {
-			state.loading = false
-			state.isLogin = true
-			state.token = action.payload?.accessToken
-			state.auth = action.payload?.auth
-		})
-		builder.addCase(registerAction.rejected, (state, action) => {
-			state.loading = false
-			state.error = action.payload
-		})
-
 		builder.addCase(loginAction.pending, (state) => {
 			state.loading = true
 			state.error = ''

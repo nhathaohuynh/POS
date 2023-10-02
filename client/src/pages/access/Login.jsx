@@ -10,7 +10,7 @@ import InputField from '../../components/InputField'
 import Button from '../../components/Button'
 
 const Login = () => {
-	const { error, isLogin, user } = useSelector((state) => state.authReducer)
+	const { error, isLogin, auth } = useSelector((state) => state.authReducer)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const initInputs = {
@@ -51,7 +51,7 @@ const Login = () => {
 			toastError(error)
 			dispatch(clearError())
 		}
-		if (isLogin && user) {
+		if (isLogin && auth) {
 			toastSuccess('Login successfully')
 			navigate(`/${path.HOME}`)
 		}

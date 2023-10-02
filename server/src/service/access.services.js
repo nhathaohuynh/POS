@@ -45,39 +45,6 @@ class AccessService {
 			},
 		}
 	}
-
-	async register({ username, email, password }) {
-		// check if user exist
-		const userExists = await checkUserByEmail(email)
-
-		if (userExists) throw new Conflict('Email already in use. ')
-
-		// encryppt the password but the mongoose will do it before save to db
-
-		// create user document and save it db
-		const user = await userModel.create({ username, email, password })
-
-		// generate token
-		const payload = {
-			userId: user._id,
-			email,
-		}
-		const accessToken = generateToken(payload, EXPIRES_ATK)
-
-		// unselect field password for client
-		const userFields = unselectFields(user, [
-			'password',
-			'createdAt',
-			'updatedAt',
-		])
-
-		return {
-			accessToken,
-			user: {
-				...userFields,
-			},
-		}
-	}
 }
 
 module.exports = new AccessService()
