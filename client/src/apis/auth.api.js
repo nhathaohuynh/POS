@@ -2,13 +2,7 @@ import instance from '../../axios.config.js'
 import { logout } from '../utils/logout.js'
 
 export const apiLogin = async (payload) =>
-	instance('/user/login', {
-		method: 'post',
-		data: payload,
-	})
-
-export const apiRegister = async (payload) =>
-	instance('/user/register', {
+	instance('/access/login', {
 		method: 'post',
 		data: payload,
 	})

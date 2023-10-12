@@ -2,6 +2,7 @@ const { OkResponse, CreatedResponse } = require('../utils/success.response')
 const AccessService = require('../service/access.services')
 const { loginSchema, registerSchema } = require('../validation/index')
 const { BadRequest } = require('../utils/error.response')
+const { URL_CLIENT } = require('../config')
 
 class AccessController {
 	async login(req, res) {
@@ -35,9 +36,15 @@ class AccessController {
 			throw new BadRequest(errorMessage)
 		}
 		// if don't have any error excute method register in service
-		return new CreatedResponse({
+		return new OkResponse({
 			metaData: await AccessService.register(req.body),
+			message: 'Please check your email to authenticate account',
 		}).send(res)
+	}
+
+	async authenAccount(req, res) {
+		await AccessService.authenAccount(req?.informationAccount)
+		return res.redirect(`${URL_CLIENT}/auth/success`)
 	}
 }
 

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { logout } from '../../utils/logout'
-const Dashboard = () => {
+
+const HomeEmployee = () => {
 	const { user, isLogin } = useSelector((state) => state.authReducer)
 	useEffect(() => {
-		if (!isLogin && user?.role !== 'admin') {
+		if (!isLogin && user?.role !== 'sale') {
 			logout()
 		}
 	}, [user, isLogin])
-	return <div className='w-full h-screen flex text-white'></div>
+	return <div>This is page home employee</div>
 }
 
-export default Dashboard
+export default HomeEmployee

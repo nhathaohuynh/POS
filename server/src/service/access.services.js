@@ -7,15 +7,18 @@ const { unselectFields } = require('../utils')
 const { BadRequest, Conflict } = require('../utils/error.response')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generate.jwt')
+const { URL_SERVER } = require('../config')
+const sendMail = require('../utils/sendMail')
 // the time expires of access token
 const EXPIRES_ATK = '3days'
 
 class AccessService {
-	async login({ email, password }) {
+	async login({ username, password }) {
+		const email = username + '@gmail.com'
 		const userExists = await findUserByEmail(email.toLowerCase())
 
 		//  check user already exists
-		if (!userExists) throw new BadRequest('Email is not eixisting')
+		if (!userExists) throw new BadRequest('Account is not eixisting')
 
 		// compare the password
 		const isMatchPassword = await bcrypt.compare(password, userExists.password)
@@ -46,16 +49,45 @@ class AccessService {
 		}
 	}
 
-	async register({ username, email, password }) {
+	async register({ email, role }) {
 		// check if user exist
 		const userExists = await checkUserByEmail(email)
 
 		if (userExists) throw new Conflict('Email already in use. ')
 
-		// encryppt the password but the mongoose will do it before save to db
+		const data = {
+			email,
+			role,
+		}
 
+		const timeActiveAccount = 5 * 60 * 1000
+
+		const tokenUser = generateToken(data, timeActiveAccount)
+
+		const html = `Please click in link to authenticate account 
+		<a href='${URL_SERVER}/access/authen-account/${tokenUser}'>Click Here</a>`
+
+		const options = {
+			html,
+			to: email,
+			subject: 'Authentication acoount',
+		}
+
+		sendMail(options)
+
+		return {}
+	}
+
+	async authenAccount({ email, role }) {
 		// create user document and save it db
-		const user = await userModel.create({ username, email, password })
+		const username = email.split('@')[0]
+
+		const user = await userModel.create({
+			username,
+			email: email,
+			password: username,
+			role,
+		})
 
 		// generate token
 		const payload = {
@@ -70,13 +102,6 @@ class AccessService {
 			'createdAt',
 			'updatedAt',
 		])
-
-		return {
-			accessToken,
-			user: {
-				...userFields,
-			},
-		}
 	}
 }
 

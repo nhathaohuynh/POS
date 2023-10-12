@@ -1,3 +1,6 @@
 export { default as Home } from './Home'
 export { default as Login } from './access/Login'
 export { default as Dashboard } from './admin/Dashboard'
+export { default as HomeEmployee } from './employee/HomeEmployee'
+export { default as Success } from './Authentication/Success'
+export { default as Fail } from './Authentication/Fail'

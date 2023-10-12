@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: 'http://localhost:8000/socketOI-webRTC/api/v1',
+	baseURL: 'http://localhost:8000/POS/api/v1',
 	timeout: 5000,
 })
 
