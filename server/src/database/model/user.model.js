@@ -19,6 +19,14 @@ const userSchema = new Schema(
 		password: {
 			type: String,
 		},
+		alreadyChangePassword: {
+			type: Boolean,
+			default: false,
+		},
+		role: {
+			type: String,
+			default: 'seller',
+		},
 	},
 	{
 		timestamps: true,

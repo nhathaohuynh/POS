@@ -1,11 +1,11 @@
 const JWT = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const { Authorization, BadRequest } = require('../../utils/error.response')
-const { APP_SECRET } = require('../../config')
+const { APP_SECRET, URL_CLIENT } = require('../../config')
 const { findUserById } = require('../../database/repository/user.repo')
 
 module.exports = {
-	verifyToken: asyncHandler((req, res, bext) => {
+	verifyToken: asyncHandler((req, res, next) => {
 		const isFormatToken = req.headers.authorization.startsWith('Bearer')
 
 		if (!isFormatToken) return next(new Authorization('Authorization!!'))
@@ -28,6 +28,22 @@ module.exports = {
 
 			// pass the user for request
 			req.user = foundUser
+			next()
+		})
+	}),
+
+	verifyTokenAuthenAccount: asyncHandler((req, res, next) => {
+		const token = req.params.informationAccount
+		console.log(token)
+
+		if (!token) return res.redirect(`${URL_CLIENT}/auth/fail`)
+
+		JWT.verify(token, APP_SECRET, async (err, decoded) => {
+			if (err) {
+				return res.redirect(`${URL_CLIENT}/auth/fail`)
+			}
+			// pass the user for request
+			req.informationAccount = decoded
 			next()
 		})
 	}),
