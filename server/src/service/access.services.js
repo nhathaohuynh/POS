@@ -48,8 +48,6 @@ class AccessService {
 			},
 		}
 	}
-<<<<<<< HEAD
-=======
 
 	async register({ email, role }) {
 		// check if user exist
@@ -105,7 +103,6 @@ class AccessService {
 			'updatedAt',
 		])
 	}
->>>>>>> develop
 }
 
 module.exports = new AccessService()

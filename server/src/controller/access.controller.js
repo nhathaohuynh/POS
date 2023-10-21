@@ -22,8 +22,6 @@ class AccessController {
 			metaData: await AccessService.login(req.body),
 		}).send(res)
 	}
-<<<<<<< HEAD
-=======
 
 	async register(req, res) {
 		// validate valuf of inputs
@@ -48,7 +46,6 @@ class AccessController {
 		await AccessService.authenAccount(req?.informationAccount)
 		return res.redirect(`${URL_CLIENT}/auth/success`)
 	}
->>>>>>> develop
 }
 
 module.exports = new AccessController()
