@@ -9,7 +9,7 @@ const InputField = ({
 	placeholder,
 }) => {
 	return (
-		<div className='mb-4 text-[16px]'>
+		<div className='mb-4 text-[14px]'>
 			<label className='block mb-1 font-medium' htmlFor={name}>
 				{label}
 			</label>

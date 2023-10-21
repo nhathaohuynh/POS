@@ -10,8 +10,13 @@ const authSlice = createSlice({
 		isLogin: false,
 		loading: false,
 		user: null,
+		isGetCurrentUser: false,
 	},
 	reducers: {
+		setCurrentEmployee: (state, action) => {
+			state.user = action.payload.user
+			state.isGetCurrentUser = true
+		},
 		clearError: (state) => {
 			state.error = ''
 		},
@@ -33,5 +38,5 @@ const authSlice = createSlice({
 		})
 	},
 })
-export const { clearError } = authSlice.actions
+export const { clearError, setCurrentEmployee } = authSlice.actions
 export default authSlice.reducer

@@ -22,4 +22,18 @@ router.get(
 	asyncHandler(AccessController.authenAccount),
 )
 
+router.post(
+	'/change-password',
+	verifyToken,
+	asyncHandler(AccessController.changePassword),
+)
+
+router.get(
+	'/current-employee',
+	verifyToken,
+	asyncHandler(AccessController.getCurrentEmployee),
+)
+
+router.post('/create-admin', asyncHandler(AccessController.createAdmin))
+
 module.exports = router

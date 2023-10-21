@@ -9,5 +9,4 @@ export default {
 			colors: {},
 		},
 	},
-	plugins: [require('@tailwindcss/line-clamp')],
 }
