@@ -10,6 +10,18 @@ module.exports = {
 	},
 
 	findUserById: async (id) => {
-		return await userModel.findById(id).select('-password').lean()
+		return await userModel
+			.findById(id)
+			.select('-password -updatedAt -createdAt')
+			.lean()
+	},
+
+	findUserByIdAndUpdatePasword: async (id, newPassword) => {
+		return await userModel
+			.findByIdAndUpdate(id, {
+				password: newPassword,
+				alreadyChangePassword: true,
+			})
+			.lean()
 	},
 }

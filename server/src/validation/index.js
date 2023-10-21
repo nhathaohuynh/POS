@@ -10,4 +10,9 @@ module.exports = {
 		username: Joi.string().min(3).max(20).required(),
 		password: Joi.string().min(3).max(20).required(),
 	}),
+
+	changePasswordShema: Joi.object({
+		newPassword: Joi.string().min(6).max(20).required(),
+		comfirmPassword: Joi.string().min(6).max(20).required(),
+	}),
 }
