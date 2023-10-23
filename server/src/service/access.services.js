@@ -93,13 +93,13 @@ class AccessService {
 		return {}
 	}
 
-	async registerAdmin() {
+	async createAdmin() {
 		const emailAdmin = 'admin@gmail.com'
 		const role = 'admin'
 		const username = 'admin'
 		const userExists = await checkUserByEmail(emailAdmin)
 
-		if (userExists) throw new Conflict('Email already in use.')
+		if (userExists) throw new Conflict('Admin have already created.')
 
 		const user = await userModel.create({
 			username,
@@ -138,25 +138,6 @@ class AccessService {
 		return {
 			employee: await findUserById(userId),
 		}
-	}
-
-	async createAdmin() {
-		const email = 'admin@gmail.com'
-		const username = 'admin'
-		const role = 'admin'
-		const userExists = await findUserByEmail(email.toLowerCase())
-
-		//  check user already exists
-		if (userExists) throw new Forbidden('Admin was already created')
-
-		await userModel.create({
-			username,
-			email: emailAdmin,
-			password: username,
-			role,
-		})
-
-		return {}
 	}
 }
 
